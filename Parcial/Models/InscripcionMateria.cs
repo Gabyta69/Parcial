@@ -12,11 +12,13 @@ namespace Parcial.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class InscripcionMateria
     {
-        public int Id { get; set; }
-        public int UsuarioId { get; set; }
-        public string Email { get; set; }
-        public string Curso { get; set; }
+        public int UsuarioCursoID { get; set; }
+        public Nullable<int> UserID { get; set; }
+        public Nullable<int> CursoID { get; set; }
+    
+        public virtual Curso Curso { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

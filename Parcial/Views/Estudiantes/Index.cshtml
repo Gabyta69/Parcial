@@ -1,0 +1,39 @@
+﻿@model List<Parcial.Models.Curso>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Materias y docentes</h2>
+<div class="row">
+    <div class="col-md-12">
+        <input type="button" class="btn btn-primary" onclick="document.location.href='@Url.Content("~/Estudiantes/Add")'" value="Agregar" />
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre de Curso y Docente</th>
+            </tr>
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.cursoID</td>
+                    <td>@oElemento.nombreCurso</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+    function jsDelete() {
+
+    }
+</script>
+

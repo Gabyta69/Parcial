@@ -21,18 +21,43 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
           <Key>
             <PropertyRef Name="cursoID" />
           </Key>
-          <Property Name="cursoID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cursoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombreCurso" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Estudiantes">
           <Key>
-            <PropertyRef Name="estudianteID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="estudianteID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="50" />
-          <Property Name="edad" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Curso" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="InscripcionMaterias">
+          <Key>
+            <PropertyRef Name="UsuarioCursoID" />
+          </Key>
+          <Property Name="UsuarioCursoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="CursoID" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdRol" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -51,6 +76,9 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
         <EntityContainer Name="RC101320ModelStoreContainer">
           <EntitySet Name="Cursos" EntityType="Self.Cursos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InscripcionMaterias" EntityType="Self.InscripcionMaterias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carreras" EntityType="Self.Carreras" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -64,26 +92,7 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RC101320Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Curso">
-          <Key>
-            <PropertyRef Name="cursoID" />
-          </Key>
-          <Property Name="cursoID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nombreCurso" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Estudiante">
-          <Key>
-            <PropertyRef Name="estudianteID" />
-          </Key>
-          <Property Name="estudianteID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="edad" Type="Int32" />
-        </EntityType>
         <EntityContainer Name="RC101320Entities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cursos" EntityType="Self.Curso" />
-          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
           <EntitySet Name="Usuarios" EntityType="RC101320Model.Usuario" />
           <EntitySet Name="Carreras" EntityType="RC101320Model.Carrera" />
           <FunctionImport Name="InsertarUsuario">
@@ -91,6 +100,19 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
             <Parameter Name="NuevaContraseña" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ObtenerCarreras" ReturnType="Collection(RC101320Model.ObtenerCarreras_Result)" />
+          <EntitySet Name="Roles" EntityType="RC101320Model.Role" />
+          <EntitySet Name="Cursos" EntityType="RC101320Model.Curso" />
+          <EntitySet Name="Estudiantes" EntityType="RC101320Model.Estudiante" />
+          <EntitySet Name="InscripcionMaterias" EntityType="RC101320Model.InscripcionMateria" />
+          <EntitySet Name="sysdiagrams" EntityType="RC101320Model.sysdiagram" />
+          <AssociationSet Name="FK__Inscripci__Curso__2A164134" Association="RC101320Model.FK__Inscripci__Curso__2A164134">
+            <End Role="Curso" EntitySet="Cursos" />
+            <End Role="InscripcionMateria" EntitySet="InscripcionMaterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inscripci__UserI__29221CFB" Association="RC101320Model.FK__Inscripci__UserI__29221CFB">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="InscripcionMateria" EntitySet="InscripcionMaterias" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -100,6 +122,7 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
           <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rol" Type="Int32" />
+          <NavigationProperty Name="InscripcionMaterias" Relationship="RC101320Model.FK__Inscripci__UserI__29221CFB" FromRole="Usuario" ToRole="InscripcionMateria" />
         </EntityType>
         <EntityType Name="Carrera">
           <Key>
@@ -116,31 +139,81 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="1000" />
         </ComplexType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdRol" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="cursoID" />
+          </Key>
+          <Property Name="cursoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCurso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="InscripcionMaterias" Relationship="RC101320Model.FK__Inscripci__Curso__2A164134" FromRole="Curso" ToRole="InscripcionMateria" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Curso" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="InscripcionMateria">
+          <Key>
+            <PropertyRef Name="UsuarioCursoID" />
+          </Key>
+          <Property Name="UsuarioCursoID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="CursoID" Type="Int32" />
+          <NavigationProperty Name="Curso" Relationship="RC101320Model.FK__Inscripci__Curso__2A164134" FromRole="InscripcionMateria" ToRole="Curso" />
+          <NavigationProperty Name="Usuario" Relationship="RC101320Model.FK__Inscripci__UserI__29221CFB" FromRole="InscripcionMateria" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__Inscripci__Curso__2A164134">
+          <End Type="RC101320Model.Curso" Role="Curso" Multiplicity="0..1" />
+          <End Type="RC101320Model.InscripcionMateria" Role="InscripcionMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="cursoID" />
+            </Principal>
+            <Dependent Role="InscripcionMateria">
+              <PropertyRef Name="CursoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inscripci__UserI__29221CFB">
+          <End Type="RC101320Model.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="RC101320Model.InscripcionMateria" Role="InscripcionMateria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InscripcionMateria">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="RC101320ModelStoreContainer" CdmEntityContainer="RC101320Entities1">
-          <EntitySetMapping Name="Cursos">
-            <EntityTypeMapping TypeName="RC101320Model.Curso">
-              <MappingFragment StoreEntitySet="Cursos">
-                <ScalarProperty Name="cursoID" ColumnName="cursoID" />
-                <ScalarProperty Name="nombreCurso" ColumnName="nombreCurso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Estudiantes">
-            <EntityTypeMapping TypeName="RC101320Model.Estudiante">
-              <MappingFragment StoreEntitySet="Estudiantes">
-                <ScalarProperty Name="estudianteID" ColumnName="estudianteID" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="edad" ColumnName="edad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="RC101320Model.Usuario">
               <MappingFragment StoreEntitySet="Usuarios">
@@ -170,6 +243,53 @@ advertencia 6002: La tabla o vista 'RC101320.dbo.Carreras' no tiene definida nin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="RC101320Model.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cursos">
+            <EntityTypeMapping TypeName="RC101320Model.Curso">
+              <MappingFragment StoreEntitySet="Cursos">
+                <ScalarProperty Name="nombreCurso" ColumnName="nombreCurso" />
+                <ScalarProperty Name="cursoID" ColumnName="cursoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="RC101320Model.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiantes">
+                <ScalarProperty Name="Curso" ColumnName="Curso" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InscripcionMaterias">
+            <EntityTypeMapping TypeName="RC101320Model.InscripcionMateria">
+              <MappingFragment StoreEntitySet="InscripcionMaterias">
+                <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UsuarioCursoID" ColumnName="UsuarioCursoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RC101320Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

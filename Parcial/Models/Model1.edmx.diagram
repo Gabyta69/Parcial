@@ -5,10 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bc97dcbac1e14b5582da0f5dafd5171f" Name="Diagram1">
-        <EntityTypeShape EntityType="RC101320Model.Curso" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RC101320Model.Estudiante" Width="1.5" PointX="4.125" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RC101320Model.Usuario" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="RC101320Model.Usuario" Width="1.5" PointX="0.625" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="RC101320Model.Carrera" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="RC101320Model.Role" Width="2" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="RC101320Model.Curso" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="RC101320Model.Estudiante" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="RC101320Model.InscripcionMateria" Width="1.5" PointX="6.375" PointY="0.875" />
+        <EntityTypeShape EntityType="RC101320Model.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="RC101320Model.FK__Inscripci__Curso__2A164134" />
+        <AssociationConnector Association="RC101320Model.FK__Inscripci__UserI__29221CFB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

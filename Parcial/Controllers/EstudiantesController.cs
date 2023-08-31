@@ -3,87 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using Parcial.Models;
 
 namespace Parcial.Controllers
 {
-    public class EstudiantesController : Controller
+
+    public class EstudianteController : Controller
     {
-        // GET: Estudiantes
+
+        private RC101320Entities1 db = new RC101320Entities1();
+
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Estudiantes/Details/5
-        public ActionResult Details(int id)
+        public ActionResult AdminEstudiantes()
+        {
+            var cursos = db.Cursos.ToList();
+            return View(cursos);
+        }
+
+        public ActionResult Estudiantes()
+        {
+            var cursos = db.Cursos.ToList();
+            return View(cursos);
+        }
+
+        public ActionResult AgregarCurso()
         {
             return View();
         }
 
-        // GET: Estudiantes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Estudiantes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult AgregarCurso(Curso cursos)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                db.Cursos.Add(cursos);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Estudiantes");
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Estudiantes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Estudiantes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Estudiantes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Estudiantes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(cursos);
         }
     }
 }

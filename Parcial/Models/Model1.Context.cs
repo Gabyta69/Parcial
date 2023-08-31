@@ -27,10 +27,13 @@ namespace Parcial.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Curso> Cursos { get; set; }
-        public virtual DbSet<Estudiante> Estudiantes { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Carrera> Carreras { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<Curso> Cursos { get; set; }
+        public virtual DbSet<Estudiante> Estudiantes { get; set; }
+        public virtual DbSet<InscripcionMateria> InscripcionMaterias { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual int InsertarUsuario(string nuevoUsuario, string nuevaContraseña)
         {

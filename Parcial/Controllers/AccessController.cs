@@ -1,13 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
-using Parcial.Models;
-using System;
-using System.Collections.Generic;
+﻿using Parcial.Models;
+using System.Data.Entity;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Linq;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace Parcial.Controllers
@@ -31,13 +25,15 @@ namespace Parcial.Controllers
             {
                 if (usuario.Rol == 0)
                 {
-                    return RedirectToAction("MenuPrincipal", "Home");
+                    return RedirectToAction("Usuarios", "Home");
                 }
                 else 
                 {
-                    if ((usuario.Rol == 1))
+                    if (usuario.Rol == 1)
                     {
-                        return RedirectToAction("MenuPrincipal1", "Home");
+                        Session["UserID"] = usuario.Id;
+
+                        return RedirectToAction("Estudiante", "Home");
                     }                    
                 }                
             }

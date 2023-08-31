@@ -12,11 +12,12 @@ namespace Parcial.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Estudiante
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public int UsuarioId { get; set; }
-        public string Email { get; set; }
-        public string Curso { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
